@@ -1,18 +1,18 @@
-#include <iostream>
+#include "Game.h"
 #include "raylib.h"
 
 int main()
 {
-    InitWindow(480, 720, "Flappy Bird");
+    Game game {};
+    game.Init();
+    game.Start();
 
     while (!WindowShouldClose())
     {
-        BeginDrawing();
-        ClearBackground(DARKGRAY);
-        EndDrawing();
+        game.Update();
+        game.Draw();
     }
 
-    // @TODO cleanup
-
+    game.Cleanup();
     return 0;
 }
