@@ -1,0 +1,63 @@
+# =========================
+# Build directories
+# =========================
+build*/
+cmake-build-*/
+out/
+dist/
+
+# =========================
+# CMake
+# =========================
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+
+# =========================
+# CLion / JetBrains
+# =========================
+.idea/
+*.iml
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
+# =========================
+# Windows
+# =========================
+Thumbs.db
+
+# =========================
+# Emscripten generated files
+# =========================
+*.wasm
+*.js
+*.data
+*.worker.js
+*.symbols
+*.html
+*.map
+
+# BUT keep your custom HTML shell
+!web/minimal_shell.html
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Debug symbols
+# =========================
+*.pdb
+*.dSYM/
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.swp
