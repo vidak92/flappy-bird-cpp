@@ -28,6 +28,7 @@ struct Game
 {
     void Init();
     void Start();
+    void End();
     void Update();
     void Draw();
     void Cleanup();

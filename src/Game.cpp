@@ -12,32 +12,32 @@ void Game::Init()
 
     _player.Init();
 
-    _groundTextureTop = LoadTexture("../res/terrain_grass_block_top.png");
+    _groundTextureTop = Utils::LoadTextureWithFilename("terrain_grass_block_top.png");
     SetTextureWrap(_groundTextureTop, TEXTURE_WRAP_REPEAT);
     float groundPositionYTop = (float)Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT;
     InitGroundSprite(&_groundSpriteTop, &_groundTextureTop, groundPositionYTop);
 
-    _groundTextureMid = LoadTexture("../res/terrain_grass_block_center.png");
+    _groundTextureMid = Utils::LoadTextureWithFilename("terrain_grass_block_center.png");
     SetTextureWrap(_groundTextureMid, TEXTURE_WRAP_REPEAT);
     float groundPositionYMid = _groundSpriteTop.position.y + _groundSpriteTop.size.y;
     InitGroundSprite(&_groundSpriteMid, &_groundTextureMid, groundPositionYMid);
 
-    _pipeTextureTop = LoadTexture("../res/terrain_dirt_vertical_top.png");
-    _pipeTextureMid = LoadTexture("../res/terrain_dirt_vertical_middle.png");
+    _pipeTextureTop = Utils::LoadTextureWithFilename("terrain_dirt_vertical_top.png");
+    _pipeTextureMid = Utils::LoadTextureWithFilename("terrain_dirt_vertical_middle.png");
     SetTextureWrap(_pipeTextureMid, TEXTURE_WRAP_REPEAT);
 
-    _backgroundTextureBottom = LoadTexture("../res/background_fade_hills.png");
+    _backgroundTextureBottom = Utils::LoadTextureWithFilename("background_fade_hills.png");
     _backgroundSpriteBottom.position = Vector2 { 0.0f, Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT - Config::SCREEN_WIDTH };
     _backgroundSpriteBottom.size = Vector2 { (float)Config::SCREEN_WIDTH, (float)Config::SCREEN_WIDTH };
     _backgroundSpriteBottom.SetTexture(&_backgroundTextureBottom);
 
-    _backgroundTextureTop = LoadTexture("../res/background_clouds.png");
+    _backgroundTextureTop = Utils::LoadTextureWithFilename("background_clouds.png");
     _backgroundSpriteTop.position = Vector2 { 0.0f, _backgroundSpriteBottom.position.y - Config::SCREEN_WIDTH };
     _backgroundSpriteTop.size = Vector2 { (float)Config::SCREEN_WIDTH, (float)Config::SCREEN_WIDTH };
     _backgroundSpriteTop.SetTexture(&_backgroundTextureTop);
 
-    _buttonTexture = LoadTexture("../res/button_square_depth_flat.png");
-    _font = LoadFontEx("../res/Kenney Future.ttf", 48, 0, 250);
+    _buttonTexture = Utils::LoadTextureWithFilename("button_square_depth_flat.png");
+    _font = Utils::LoadFontWithFilename("Kenney Future.ttf", 48);
 }
 
 void Game::Start()
@@ -56,6 +56,12 @@ void Game::Start()
         float initialOffsetX = i == 0 ? (float)Config::SCREEN_WIDTH / 2.0f : 0.0f;
         SpawnPipePair(i, initialOffsetX);
     }
+}
+
+void Game::End()
+{
+    _state = OVER;
+    _player.SetAlive(false);
 }
 
 void Game::Update()
@@ -85,7 +91,7 @@ void Game::Update()
             _player.Update(jumpInput, true);
             if (_player.IsOutOfBounds())
             {
-                _state = OVER;
+                End();
             }
 
             _groundOffsetX += Config::SCROLL_SPEED * dt;
@@ -108,7 +114,7 @@ void Game::Update()
                     CheckCollisionCircleRec(_player.position, Config::PLAYER_COLLIDER_RADIUS, _pipePairs[i].upRect) ||
                     CheckCollisionCircleRec(_player.position, Config::PLAYER_COLLIDER_RADIUS, _pipePairs[i].downRect))
                 {
-                    _state = OVER;
+                    End();
                     break;
                 }
             }

@@ -12,6 +12,7 @@ struct Player
     void Draw();
     void Cleanup();
     bool IsOutOfBounds();
+    bool SetAlive(bool isAlive);
 
     Vector2 position;
     float velocityY;
@@ -21,6 +22,7 @@ struct Player
 private:
     Texture2D _texture1;
     Texture2D _texture2;
+    Texture2D _textureDead;
     float _animationTimer;
 };
 

@@ -1,11 +1,13 @@
 #include "Player.h"
 #include "Config.h"
 #include "raymath.h"
+#include "Utils.h"
 
 void Player::Init()
 {
-    _texture1 = LoadTexture("../res/bee_a.png");
-    _texture2 = LoadTexture("../res/bee_b.png");
+    _texture1 = Utils::LoadTextureWithFilename("bee_a.png");
+    _texture2 = Utils::LoadTextureWithFilename("bee_b.png");
+    _textureDead = Utils::LoadTextureWithFilename("bee_rest.png");
     _animationTimer = Config::PLAYER_ANIMATION_FRAME_DURATION;
 }
 
@@ -19,7 +21,8 @@ void Player::Start()
     sprite.size = Vector2 { Config::PLAYER_SPRITE_SIZE, Config::PLAYER_SPRITE_SIZE };
     sprite.flipX = true;
     sprite.anchor = Vector2 { 0.5f, 0.5f };
-    sprite.SetTexture(&_texture1);
+
+    SetAlive(true);
 }
 
 void Player::Update(bool shouldJump, bool shouldAnimate)
@@ -41,7 +44,8 @@ void Player::Update(bool shouldJump, bool shouldAnimate)
         position.y = maxPositionY;
     }
 
-    float rotation = Normalize(velocityY, -500.0f, 1000.0f); // @TODO config
+    // @TODO config
+    float rotation = Normalize(velocityY, -500.0f, 1000.0f);
     rotation = Lerp(-30, 45, rotation);
     rotation = Clamp(rotation, -30, 45);
 
@@ -75,6 +79,7 @@ void Player::Cleanup()
 {
     UnloadTexture(_texture1);
     UnloadTexture(_texture2);
+    UnloadTexture(_textureDead);
 }
 
 bool Player::IsOutOfBounds()
@@ -82,4 +87,9 @@ bool Player::IsOutOfBounds()
     float minPositionY = -Config::PLAYER_COLLIDER_RADIUS;
     float maxPositionY = Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT - Config::PLAYER_COLLIDER_RADIUS;
     return position.y >= maxPositionY || position.y <= minPositionY;
+}
+
+bool Player::SetAlive(bool isAlive)
+{
+    sprite.SetTexture(isAlive ? &_texture1 : &_textureDead);
 }
