@@ -12,7 +12,7 @@ struct Player
     void Draw();
     void Cleanup();
     bool IsOutOfBounds();
-    bool SetAlive(bool isAlive);
+    void SetAlive(bool isAlive);
     int GetMinPositionY();
     int GetMaxPositionY();
 
@@ -22,10 +22,10 @@ struct Player
     Sprite sprite;
 
 private:
-    Texture2D _texture1;
-    Texture2D _texture2;
-    Texture2D _textureDead;
-    float _animationTimer;
+    Texture2D _texture1 {};
+    Texture2D _texture2 {};
+    Texture2D _textureDead {};
+    float _animationTimer {};
 };
 
 #endif //FLAPPY_BIRD_CPP_PLAYER_H

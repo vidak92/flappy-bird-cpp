@@ -91,7 +91,7 @@ bool Player::IsOutOfBounds()
     return position.y >= maxPositionY || position.y <= minPositionY;
 }
 
-bool Player::SetAlive(bool isAlive)
+void Player::SetAlive(bool isAlive)
 {
     sprite.SetTexture(isAlive ? &_texture1 : &_textureDead);
 }
