@@ -8,7 +8,7 @@ struct Player
 {
     void Init();
     void Start();
-    void Update(bool shouldJump);
+    void Update(bool shouldJump, bool shouldAnimate);
     void Draw();
     void Cleanup();
     bool IsOutOfBounds();

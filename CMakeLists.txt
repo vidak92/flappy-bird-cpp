@@ -19,6 +19,8 @@ add_executable(flappy_bird_cpp src/main.cpp
         src/Config.h
         src/Sprite.cpp
         src/Sprite.h
+        src/Utils.cpp
+        src/Utils.h
 )
 
 target_link_libraries(flappy_bird_cpp raylib)

@@ -1,5 +1,6 @@
 #ifndef FLAPPY_BIRD_CPP_SPRITE_H
 #define FLAPPY_BIRD_CPP_SPRITE_H
+
 #include "raylib.h"
 
 struct Sprite
@@ -18,8 +19,6 @@ struct Sprite
 
     void SetTexture(Texture2D *texture);
     void Draw();
-    Rectangle GetDefaultSrcTextureRect();
-    bool ShouldUseDefaultSrcTextureRect();
 };
 
 #endif //FLAPPY_BIRD_CPP_SPRITE_H
