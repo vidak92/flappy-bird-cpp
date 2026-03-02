@@ -20,7 +20,7 @@ const float Config::PLAYER_ANIMATION_FRAME_DURATION = 1.0f / 8.0f;
 
 const float Config::PIPE_SPEED = 100.0f;
 const float Config::PIPE_COLLIDER_WIDTH = 100.0f;
-const float Config::PIPE_SPRITE_WIDTH = 100.0f;
+const float Config::PIPE_SPRITE_WIDTH = 100.0f; // @TODO pipe sprite should be a little bigger than the collider
 const float Config::PIPE_GAP_SIZE_X = 200.0f;
 const float Config::PIPE_GAP_SIZE_Y_MIN = 160.0f;
 const float Config::PIPE_GAP_SIZE_Y_MAX = 220.0f;

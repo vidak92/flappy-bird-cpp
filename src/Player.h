@@ -13,6 +13,8 @@ struct Player
     void Cleanup();
     bool IsOutOfBounds();
     bool SetAlive(bool isAlive);
+    int GetMinPositionY();
+    int GetMaxPositionY();
 
     Vector2 position;
     float velocityY;

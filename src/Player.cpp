@@ -29,6 +29,7 @@ void Player::Update(bool shouldJump, bool shouldAnimate)
 {
     float dt = GetFrameTime();
 
+    // velocity
     if (shouldJump)
     {
         velocityY = -Config::PLAYER_JUMP_FORCE * dt;
@@ -36,9 +37,10 @@ void Player::Update(bool shouldJump, bool shouldAnimate)
     // std::cout << "gravity: " << Config::PLAYER_GRAVITY * dt << "\n";
     velocityY += Config::PLAYER_GRAVITY * dt;
     // std::cout << "velocity y: " << velocityY << "\n";
-    position.y += velocityY * dt;
 
-    float maxPositionY = Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT - Config::PLAYER_COLLIDER_RADIUS;
+    // position
+    position.y += velocityY * dt;
+    float maxPositionY = GetMaxPositionY();
     if (position.y > maxPositionY)
     {
         position.y = maxPositionY;
@@ -84,12 +86,22 @@ void Player::Cleanup()
 
 bool Player::IsOutOfBounds()
 {
-    float minPositionY = -Config::PLAYER_COLLIDER_RADIUS;
-    float maxPositionY = Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT - Config::PLAYER_COLLIDER_RADIUS;
+    float minPositionY = GetMinPositionY();
+    float maxPositionY = GetMaxPositionY();
     return position.y >= maxPositionY || position.y <= minPositionY;
 }
 
 bool Player::SetAlive(bool isAlive)
 {
     sprite.SetTexture(isAlive ? &_texture1 : &_textureDead);
+}
+
+int Player::GetMinPositionY()
+{
+    return -Config::PLAYER_COLLIDER_RADIUS;
+}
+
+int Player::GetMaxPositionY()
+{
+    return Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT - Config::PLAYER_COLLIDER_RADIUS;
 }

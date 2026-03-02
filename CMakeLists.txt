@@ -33,6 +33,8 @@ if(EMSCRIPTEN)
             src/Sprite.h
             src/Utils.cpp
             src/Utils.h
+            src/PipePair.cpp
+            src/PipePair.h
     )
 
     target_link_libraries(flappy_bird_cpp raylib)
@@ -56,6 +58,8 @@ else ()
             src/Sprite.h
             src/Utils.cpp
             src/Utils.h
+            src/PipePair.cpp
+            src/PipePair.h
     )
 
     target_link_libraries(flappy_bird_cpp raylib)

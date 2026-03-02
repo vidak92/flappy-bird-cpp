@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "PipePair.h"
 #include "Player.h"
 #include "raylib.h"
 
@@ -11,17 +12,6 @@ enum GameState
     NONE,
     STARTED,
     OVER
-};
-
-struct PipePair
-{
-    Rectangle upRect;
-    Rectangle downRect;
-    float gapSize;
-    Sprite upSpriteTop;
-    Sprite upSpriteMid;
-    Sprite downSpriteTop;
-    Sprite downSpriteMid;
 };
 
 struct Game

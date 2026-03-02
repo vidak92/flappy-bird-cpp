@@ -98,13 +98,7 @@ void Game::Update()
 
             for (int i = 0; i < PIPE_PAIR_COUNT; ++i)
             {
-                _pipePairs[i].upRect.x -= Config::PIPE_SPEED * dt;
-                _pipePairs[i].downRect.x -= Config::PIPE_SPEED * dt;
-                _pipePairs[i].upSpriteTop.position.x = _pipePairs[i].downRect.x;
-                _pipePairs[i].upSpriteMid.position.x = _pipePairs[i].downRect.x;
-                _pipePairs[i].downSpriteTop.position.x = _pipePairs[i].downRect.x;
-                _pipePairs[i].downSpriteMid.position.x = _pipePairs[i].downRect.x;
-
+                _pipePairs[i].MovePositionX(-Config::PIPE_SPEED * dt);
                 if (_pipePairs[i].upRect.x < -Config::PIPE_COLLIDER_WIDTH)
                 {
                     // respawn
@@ -165,16 +159,7 @@ void Game::Draw()
 
     for (int i = 0; i < PIPE_PAIR_COUNT; ++i)
     {
-        _pipePairs[i].upSpriteTop.Draw();
-        _pipePairs[i].upSpriteMid.Draw();
-        _pipePairs[i].downSpriteTop.Draw();
-        _pipePairs[i].downSpriteMid.Draw();
-
-        if (Config::DEBUG_DRAW_ENABLED)
-        {
-            DrawRectangleLinesEx(_pipePairs[i].upRect, 1.0f, MAGENTA);
-            DrawRectangleLinesEx(_pipePairs[i].downRect, 1.0f, MAGENTA);
-        }
+        _pipePairs[i].Draw();
     }
 
     _groundSpriteTop.tilingOffset.x = _groundOffsetX;
@@ -244,37 +229,15 @@ void Game::InitGroundSprite(Sprite* sprite, Texture2D* texture, float positionY)
 
 void Game::SpawnPipePair(int i, float offsetX)
 {
-    float lastPipePairPosX = _pipePairs[_lastPipePairIndex].upRect.x;
-    float x = lastPipePairPosX + Config::PIPE_COLLIDER_WIDTH + Config::PIPE_GAP_SIZE_X + offsetX;
+    float lastPipePairPositonX = _pipePairs[_lastPipePairIndex].upRect.x;
+    float positionX = lastPipePairPositonX + Config::PIPE_COLLIDER_WIDTH + Config::PIPE_GAP_SIZE_X + offsetX;
 
-    float gapPosY = Utils::RandomRange(Config::PIPE_GAP_POS_Y_MIN, Config::PIPE_GAP_POS_Y_MAX);
+    float gapPositionY = Utils::RandomRange(Config::PIPE_GAP_POS_Y_MIN, Config::PIPE_GAP_POS_Y_MAX);
     float pipeGapSizeY = Utils::RandomRange(Config::PIPE_GAP_SIZE_Y_MIN, Config::PIPE_GAP_SIZE_Y_MAX);
-    float upY = gapPosY - pipeGapSizeY / 2.0f;
-    float downY = gapPosY + pipeGapSizeY / 2.0f;
+    float upPositionY = gapPositionY - pipeGapSizeY / 2.0f;
+    float downPositionY = gapPositionY + pipeGapSizeY / 2.0f;
 
-    _pipePairs[i].upRect = Rectangle { x, 0, Config::PIPE_COLLIDER_WIDTH, upY };
-    _pipePairs[i].downRect = Rectangle { x, downY, Config::PIPE_COLLIDER_WIDTH, Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT - upY };
-
-    _pipePairs[i].downSpriteTop.size = Vector2 { Config::PIPE_SPRITE_WIDTH, Config::PIPE_SPRITE_WIDTH };
-    _pipePairs[i].downSpriteTop.position = Vector2 { x, _pipePairs[i].downRect.y };
-    _pipePairs[i].downSpriteTop.SetTexture(&_pipeTextureTop);
-
-    _pipePairs[i].downSpriteMid.size = Vector2 { Config::PIPE_SPRITE_WIDTH, _pipePairs[i].downRect.height - Config::PIPE_SPRITE_WIDTH };
-    _pipePairs[i].downSpriteMid.position = Vector2 { x, _pipePairs[i].downRect.y + Config::PIPE_SPRITE_WIDTH };
-    _pipePairs[i].downSpriteMid.SetTexture(&_pipeTextureMid);
-    _pipePairs[i].downSpriteMid.tilingSize.y = _pipePairs[i].downSpriteMid.size.y;
-
-    _pipePairs[i].upSpriteTop.size = Vector2 { Config::PIPE_SPRITE_WIDTH, Config::PIPE_SPRITE_WIDTH };
-    _pipePairs[i].upSpriteTop.position = Vector2 { x, _pipePairs[i].upRect.y + _pipePairs[i].upRect.height - Config::PIPE_SPRITE_WIDTH};
-    _pipePairs[i].upSpriteTop.flipY = true;
-    _pipePairs[i].upSpriteTop.SetTexture(&_pipeTextureTop);
-
-    _pipePairs[i].upSpriteMid.size = Vector2 { Config::PIPE_SPRITE_WIDTH, _pipePairs[i].upRect.height - Config::PIPE_SPRITE_WIDTH };
-    _pipePairs[i].upSpriteMid.position = Vector2{x, _pipePairs[i].upRect.y};
-    _pipePairs[i].upSpriteMid.flipY = true;
-    _pipePairs[i].upSpriteMid.SetTexture(&_pipeTextureMid);
-    _pipePairs[i].upSpriteMid.tilingSize.y = -_pipePairs[i].upSpriteMid.size.y;
-
+    _pipePairs[i].Spawn(positionX, upPositionY, downPositionY, &_pipeTextureTop, &_pipeTextureMid);
     _lastPipePairIndex = i;
 }
 
@@ -337,4 +300,3 @@ void Game::DrawGameOverPanel()
     DrawPanelText(gameOverScoreString, 32, panelRect, 130.0f);
     DrawPanelText(gameOverRestartString, 32, panelRect, 210.0f);
 }
-
