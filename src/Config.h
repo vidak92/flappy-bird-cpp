@@ -5,6 +5,8 @@
 
 struct Config
 {
+    static const char* APP_VERSION;
+
     static const int SCREEN_WIDTH;
     static const int SCREEN_HEIGHT;
     static const int TARGET_FPS;

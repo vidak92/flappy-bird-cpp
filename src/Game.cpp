@@ -13,15 +13,18 @@ void Game::Init()
     _player.Init();
 
     _groundTextureTop = LoadTexture("../res/terrain_grass_block_top.png");
+    SetTextureWrap(_groundTextureTop, TEXTURE_WRAP_REPEAT);
     float groundPositionYTop = (float)Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT;
     InitGroundSprite(&_groundSpriteTop, &_groundTextureTop, groundPositionYTop);
 
     _groundTextureMid = LoadTexture("../res/terrain_grass_block_center.png");
+    SetTextureWrap(_groundTextureMid, TEXTURE_WRAP_REPEAT);
     float groundPositionYMid = _groundSpriteTop.position.y + _groundSpriteTop.size.y;
     InitGroundSprite(&_groundSpriteMid, &_groundTextureMid, groundPositionYMid);
 
     _pipeTextureTop = LoadTexture("../res/terrain_dirt_vertical_top.png");
     _pipeTextureMid = LoadTexture("../res/terrain_dirt_vertical_middle.png");
+    SetTextureWrap(_pipeTextureMid, TEXTURE_WRAP_REPEAT);
 
     _backgroundTextureBottom = LoadTexture("../res/background_fade_hills.png");
     _backgroundSpriteBottom.position = Vector2 { 0.0f, Config::SCREEN_HEIGHT - Config::GROUND_HEIGHT - Config::SCREEN_WIDTH };
@@ -204,6 +207,10 @@ void Game::Draw()
             break;
         }
     }
+
+    std::string versionText = std::format("v{}", Config::APP_VERSION);
+    Vector2 versionTextPosition { 10.0f, (float)Config::SCREEN_HEIGHT - 24.0f };
+    DrawTextEx(_font, versionText.c_str(), versionTextPosition, 18, 1, WHITE);
 
     EndDrawing();
 }

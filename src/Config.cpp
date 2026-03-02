@@ -1,5 +1,7 @@
 #include "Config.h"
 
+const char* Config::APP_VERSION = "0.1.0";
+
 const int Config::SCREEN_WIDTH = 480;
 const int Config::SCREEN_HEIGHT = 720;
 const int Config::TARGET_FPS = 60;
