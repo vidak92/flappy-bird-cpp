@@ -132,7 +132,7 @@ void Game::Update()
 
             if (IsKeyPressed(KEY_R))
             {
-                // restart
+                // @NOTE restart
                 for (int i = 0; i < PIPE_PAIR_COUNT; i++)
                 {
                     // reset position

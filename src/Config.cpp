@@ -1,5 +1,9 @@
 #include "Config.h"
 
+// @NOTE Coordinates start in the top-left corner (0, 0)
+// and end in the bottom-right corner (SCREEN_WIDTH, SCREEN_HEIGHT).
+// All sprites are square (width equals height)
+
 const char* Config::APP_VERSION = "0.1.1";
 
 const int Config::SCREEN_WIDTH = 480;
